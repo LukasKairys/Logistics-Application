@@ -1,0 +1,13 @@
+bin
+obj
+Properties
+*.suo
+
+LogisticsDb/bin
+LogisticsDb/obj
+LogisticsDb/Properties
+
+hooks
+HEAD
+info*/
+config
