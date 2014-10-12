@@ -3,28 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logistics.Controllers;
 using Logistics.DataTypes;
 
-namespace Logistics.Controllers
+namespace Logistics
 {
     internal delegate void Printer(string name);
 
-    class ControllersBuilder
+    static class LogisticsService
     {
 
-        private readonly IDbController _dbController;
+        private static readonly IDbController _dbController = new DbController();
 
-        public ControllersBuilder()
-        {
-            _dbController = new DbController();
-        }
-
-        public ClientsController GetClientsController()
+        public static ClientsController GetClientsController()
         {
             return new ClientsController(_dbController);
         }
 
-        public OrdersController GetOrdersController()
+        public static OrdersController GetOrdersController()
         {
             return new OrdersController(_dbController);
         }

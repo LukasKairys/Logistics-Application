@@ -38,7 +38,7 @@ namespace Logistics.Controllers
             dbController.Delete(order);
         }
 
-        public IEnumerable<Order> GetAll()
+        public List<Order> GetAll()
         {
             List<Order> order = dbController.GetAllOrders();
 

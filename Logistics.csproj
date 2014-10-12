@@ -47,21 +47,42 @@
   <ItemGroup>
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DbController.cs" />
+    <Compile Include="GUI\NewClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\NewClient.Designer.cs">
+      <DependentUpon>NewClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\NewOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\NewOrder.Designer.cs">
+      <DependentUpon>NewOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IDbController.cs" />
-    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="LogisticsService.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="DataTypes\Client.cs" />
     <Compile Include="DataTypes\LandTypeOrder.cs" />
     <Compile Include="DataTypes\Order.cs" />
     <Compile Include="DataTypes\SeaTypeOrder.cs" />
-    <Compile Include="GUI\Form1.cs">
+    <Compile Include="GUI\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GUI\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NewClient.resx">
+      <DependentUpon>NewClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NewOrder.resx">
+      <DependentUpon>NewOrder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

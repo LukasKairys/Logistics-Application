@@ -10,7 +10,7 @@ namespace Logistics.Controllers
     interface IDbController
     {
 
-        void Insert(Client client);
+        void Insert(string name, string level);
 
         void Insert(Order order);
 

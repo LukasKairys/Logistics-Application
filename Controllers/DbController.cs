@@ -23,16 +23,16 @@ namespace Logistics.Controllers
             _connection = new SqlConnection(_connectionString);
         }
 
-        public void Insert(Client client)
+        public void Insert(string name, string level)
         {
             try
             {
                 _connection.Open();
 
-                SqlCommand insert = new SqlCommand("INSERT INTO Client(Name, Level) VALUES (@Name, @Level)", _connection);
+                SqlCommand insert = new SqlCommand("INSERT INTO Client(Name, [Level]) VALUES (@Name, @Level)", _connection);
                 
-                insert.Parameters.AddWithValue("@Name", client.Name);
-                insert.Parameters.AddWithValue("@Leve", client.Level);
+                insert.Parameters.AddWithValue("@Name", name);
+                insert.Parameters.AddWithValue("@Level", level);
                 
                 insert.ExecuteNonQuery();
 
@@ -50,7 +50,7 @@ namespace Logistics.Controllers
             {
                 _connection.Open();
 
-                SqlCommand insert = new SqlCommand("INSERT INTO Order(Cargo, TotalWeight, Price, From, To, ClientId) " +
+                SqlCommand insert = new SqlCommand("INSERT INTO [Order](Cargo, TotalWeight, Price, [From], [To], ClientId) " +
                                                    "VALUES (@Cargo, @TotalWeight, @Price, @From, @To, @ClientId)", _connection);
 
                 insert.Parameters.AddWithValue("@Cargo", order.Cargo);
@@ -76,7 +76,7 @@ namespace Logistics.Controllers
             {
                 _connection.Open();
 
-                SqlCommand insert = new SqlCommand("INSERT INTO SeaTypeOrder(Cargo, TotalWeight, Price, From, To, ShippingLine, IsAdditionalFasteningNeeded, ClientId) " +
+                SqlCommand insert = new SqlCommand("INSERT INTO SeaTypeOrder(Cargo, TotalWeight, Price, [From], [To], ShippingLine, IsAdditionalFasteningNeeded, ClientId) " +
                                                    "VALUES (@Cargo, @TotalWeight, @Price, @From, @To, @ShippingLine, @IsAdditionalFasteningNeeded, @ClientId)", _connection);
 
                 insert.Parameters.AddWithValue("@Cargo", order.Cargo);
@@ -104,7 +104,7 @@ namespace Logistics.Controllers
             {
                 _connection.Open();
 
-                SqlCommand insert = new SqlCommand("INSERT INTO Order(Cargo, TotalWeight, Price, From, To, TransportLine, IsOpenStorage, ClientId) " +
+                SqlCommand insert = new SqlCommand("INSERT INTO Order(Cargo, TotalWeight, Price, [From], [To],TransportLine, IsOpenStorage, ClientId) " +
                                                    "VALUES (@Cargo, @TotalWeight, @Price, @From, @To, @TransportLine, @IsOpenStorage, @ClientId)", _connection);
 
                 insert.Parameters.AddWithValue("@Cargo", order.Cargo);
@@ -132,7 +132,7 @@ namespace Logistics.Controllers
             {
                 _connection.Open();
 
-                SqlCommand select = new SqlCommand("SELECT ClientId, Name, Level " +
+                SqlCommand select = new SqlCommand("SELECT ClientId, Name, [Level] " +
                                                    "FROM Client" +
                                                    "WHERE ClientId = @ClientId", _connection);
 
@@ -205,8 +205,8 @@ namespace Logistics.Controllers
             {
                 _connection.Open();
 
-                SqlCommand selectOrders = new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, From, To, ClientId" +
-                                                   "FROM Order", _connection);
+                SqlCommand selectOrders = new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, [From], [To], ClientId" +
+                                                   " FROM [Order]", _connection);
 
                 using (SqlDataReader reader = selectOrders.ExecuteReader())
                 {
@@ -225,8 +225,8 @@ namespace Logistics.Controllers
                     }
                 }
 
-                SqlCommand selectSeaTypeOrders = new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, From, To, ClientId,  ShippingLine, IsAdditionalFasteningNeeded" +
-                                   "FROM SeaTypeOrder", _connection);
+                SqlCommand selectSeaTypeOrders = new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, [From], [To], ClientId,  ShippingLine, IsAdditionalFasteningNeeded" +
+                                   " FROM SeaTypeOrder", _connection);
 
                 using (SqlDataReader reader = selectSeaTypeOrders.ExecuteReader())
                 {
@@ -248,8 +248,8 @@ namespace Logistics.Controllers
                     }
                 }
 
-                SqlCommand selectLandTypeOrders = new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, From, To, ClientId,  TransportLine, IsOpenStorage" +
-                   "FROM LandTypeOrder", _connection);
+                SqlCommand selectLandTypeOrders = new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, [From], [To], ClientId,  TransportLine, IsOpenStorage" +
+                   " FROM LandTypeOrder", _connection);
 
                 using (SqlDataReader reader = selectLandTypeOrders.ExecuteReader())
                 {
@@ -320,7 +320,7 @@ namespace Logistics.Controllers
                 }
                 else
                 {
-                    delete = new SqlCommand("DELETE FROM Order WHERE OrderId = " +
+                    delete = new SqlCommand("DELETE FROM [Order] WHERE OrderId = " +
                                                     order.OrderId, _connection);
                 }
 

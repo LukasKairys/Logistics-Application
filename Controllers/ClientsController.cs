@@ -22,9 +22,9 @@ namespace Logistics.Controllers
             this.dbController = dbController;
         }
 
-        public void Insert(Client client)
+        public void Insert(string name, string level)
         {
-            dbController.Insert(client);
+            dbController.Insert(name, level);
         }
 
         public void Delete(Client client)
