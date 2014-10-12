@@ -20,9 +20,9 @@ namespace Logistics.Controllers
 
         List<Order> GetAllOrders();
 
-        void Delete(Client client);
+        void Delete(int clientId);
 
-        void Delete(Order order);
+        void Delete(int orderId, string orderType);
 
     }
 }

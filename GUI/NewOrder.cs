@@ -181,7 +181,7 @@ namespace Logistics.GUI
                 if (orderType == "Sea Type")
                 {
                     bool isAdditionalFasteningNeeded =
-                        Controls[Controls.IndexOfKey("isAdditionalFasteningNeeded")].Text == "Yes";
+                        Controls[Controls.IndexOfKey("fasteningComboBox")].Text == "Yes";
                     string shippingLine = Controls[Controls.IndexOfKey("shippingLineComboBox")].Text;
 
                     SeaTypeOrder seaTypeOrder = new SeaTypeOrder(0, cargo, totalWeight, price, from, to, clientId,
@@ -192,7 +192,7 @@ namespace Logistics.GUI
                 }
                 else if (orderType == "Land Type")
                 {
-                    bool isOpenStorage = Controls[Controls.IndexOfKey("IsOpenStorage")].Text == "Yes";
+                    bool isOpenStorage = Controls[Controls.IndexOfKey("openStorageComboBox")].Text == "Yes";
                     string transportLine = Controls[Controls.IndexOfKey("transportLineComboBox")].Text;
 
                     LandTypeOrder landTypeOrder = new LandTypeOrder(0, cargo, totalWeight, price, from, to, clientId,
@@ -208,6 +208,7 @@ namespace Logistics.GUI
                 }
 
                 Close();
+
             }
         }
 
@@ -225,11 +226,6 @@ namespace Logistics.GUI
         {
             int errorCount = 0;
 
-            if (orderTypeComboBox.Text.Length < 1)
-            {
-                orderTypeComboBox.BackColor = Color.Red;
-                errorCount++;
-            }
             if (clientComboBox.SelectedItem == null)
             {
                 clientComboBox.BackColor = Color.Red;

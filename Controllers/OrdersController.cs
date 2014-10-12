@@ -19,23 +19,12 @@ namespace Logistics.Controllers
 
         public void Insert(Order order)
         {
-            if (order is SeaTypeOrder)
-            {
-                dbController.Insert((SeaTypeOrder) order);
-            }
-            else if (order is LandTypeOrder)
-            {
-                dbController.Insert((LandTypeOrder) order);
-            }
-            else
-            {
-                dbController.Insert(order);
-            }
+            dbController.Insert(order);
         }
 
-        public void Delete(Order order)
+        public void Delete(int orderId, string orderType)
         {
-            dbController.Delete(order);
+            dbController.Delete(orderId, orderType);
         }
 
         public List<Order> GetAll()

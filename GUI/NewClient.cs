@@ -23,13 +23,36 @@ namespace Logistics.GUI
 
         private void addClientButton_Click(object sender, EventArgs e)
         {
+            RemoveErrors();
+            int errorCount = ValidateInfo();
 
-            string name = NameTextBox.Text;
-            string level = LevelComboBox.Text;
+            if (errorCount == 0)
+            {
+                string name = NameTextBox.Text;
+                string level = LevelComboBox.Text;
 
-            _clientsController.Insert(name, level);
+                _clientsController.Insert(name, level);
 
-            Close();
+                Close();
+            }
+        }
+
+        private void RemoveErrors()
+        {
+            NameTextBox.BackColor = Color.White;
+        }
+
+        private int ValidateInfo()
+        {
+            int errorCount = 0;
+
+            if (NameTextBox.Text.Length < 1)
+            {
+                errorCount++;
+                NameTextBox.BackColor = Color.Red;
+            }
+
+            return errorCount;
         }
     }
 }

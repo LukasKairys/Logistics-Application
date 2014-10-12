@@ -51,6 +51,7 @@
             "Standart",
             "VIP",
             "InDebt"});
+            this.LevelComboBox.SelectedIndex = 0;
             this.LevelComboBox.Location = new System.Drawing.Point(12, 88);
             this.LevelComboBox.Name = "LevelComboBox";
             this.LevelComboBox.Size = new System.Drawing.Size(145, 21);

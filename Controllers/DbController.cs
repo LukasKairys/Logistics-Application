@@ -35,42 +35,18 @@ namespace Logistics.Controllers
                 insert.Parameters.AddWithValue("@Level", level);
                 
                 insert.ExecuteNonQuery();
-
-                _connection.Close();
             }
             catch (SqlException e)
             {
                 MessageBox.Show("There was database error. Message: " + e.Message);
             }
-        }
-
-        public void Insert(Order order)
-        {
-            try
+            finally
             {
-                _connection.Open();
-
-                SqlCommand insert = new SqlCommand("INSERT INTO [Order](Cargo, TotalWeight, Price, [From], [To], ClientId) " +
-                                                   "VALUES (@Cargo, @TotalWeight, @Price, @From, @To, @ClientId)", _connection);
-
-                insert.Parameters.AddWithValue("@Cargo", order.Cargo);
-                insert.Parameters.AddWithValue("@TotalWeight", order.TotalWeight);
-                insert.Parameters.AddWithValue("@Price", order.Price);
-                insert.Parameters.AddWithValue("@From", order.From);
-                insert.Parameters.AddWithValue("@To", order.To);
-                insert.Parameters.AddWithValue("@ClientId", order.ClientId);
-
-                insert.ExecuteNonQuery();
-
                 _connection.Close();
             }
-            catch (SqlException e)
-            {
-                MessageBox.Show("There was database error. Message: " + e.Message);
-            }
         }
 
-        public void Insert(SeaTypeOrder order)
+        public void InsertSeaTypeOrder(SeaTypeOrder order)
         {
             try
             {
@@ -89,16 +65,18 @@ namespace Logistics.Controllers
                 insert.Parameters.AddWithValue("@ClientId", order.ClientId);
 
                 insert.ExecuteNonQuery();
-
-                _connection.Close();
             }
             catch (SqlException e)
             {
                 MessageBox.Show("There was database error. Message: " + e.Message);
             }
+            finally
+            {
+                _connection.Close();
+            }
         }
 
-        public void Insert(LandTypeOrder order)
+        public void InsertLandTypeOrder(LandTypeOrder order)
         {
             try
             {
@@ -117,12 +95,55 @@ namespace Logistics.Controllers
                 insert.Parameters.AddWithValue("@ClientId", order.ClientId);
 
                 insert.ExecuteNonQuery();
-
-                _connection.Close();
             }
             catch (SqlException e)
             {
                 MessageBox.Show("There was database error. Message: " + e.Message);
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
+        public void Insert(Order order)
+        {
+            if (order is SeaTypeOrder)
+            {
+                InsertSeaTypeOrder((SeaTypeOrder) order);
+            }
+            else if (order is LandTypeOrder)
+            {
+                InsertLandTypeOrder((LandTypeOrder) order);
+            }
+            else
+            {
+
+                try
+                {
+                    _connection.Open();
+
+                    SqlCommand insert =
+                        new SqlCommand("INSERT INTO [Order](Cargo, TotalWeight, Price, [From], [To], ClientId) " +
+                                       "VALUES (@Cargo, @TotalWeight, @Price, @From, @To, @ClientId)", _connection);
+
+                    insert.Parameters.AddWithValue("@Cargo", order.Cargo);
+                    insert.Parameters.AddWithValue("@TotalWeight", order.TotalWeight);
+                    insert.Parameters.AddWithValue("@Price", order.Price);
+                    insert.Parameters.AddWithValue("@From", order.From);
+                    insert.Parameters.AddWithValue("@To", order.To);
+                    insert.Parameters.AddWithValue("@ClientId", order.ClientId);
+
+                    insert.ExecuteNonQuery();
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show("There was database error. Message: " + e.Message);
+                }
+                finally
+                {
+                    _connection.Close();
+                }
             }
         }
 
@@ -150,13 +171,14 @@ namespace Logistics.Controllers
                         return new Client(ClientId, Name, Level);
                     }
                 }
-                
-
-                _connection.Close();
             }
             catch (SqlException e)
             {
                 MessageBox.Show("There was database error. Message: " + e.Message);
+            }
+            finally
+            {
+                _connection.Close();
             }
 
             return null;
@@ -171,7 +193,7 @@ namespace Logistics.Controllers
                 _connection.Open();
 
                 SqlCommand select = new SqlCommand("SELECT ClientId, Name, Level " +
-                                                   "FROM Client", _connection);
+                                                   "FROM Client ORDER BY ClientId", _connection);
 
                 using (SqlDataReader reader = select.ExecuteReader())
                 {
@@ -185,13 +207,14 @@ namespace Logistics.Controllers
                         clients.Add(new Client(ClientId, Name, Level));
                     }
                 }
-
-
-                _connection.Close();
             }
             catch (SqlException e)
             {
                 MessageBox.Show("There was database error. Message: " + e.Message);
+            }
+            finally
+            {
+                _connection.Close();
             }
 
             return clients;
@@ -205,8 +228,9 @@ namespace Logistics.Controllers
             {
                 _connection.Open();
 
-                SqlCommand selectOrders = new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, [From], [To], ClientId" +
-                                                   " FROM [Order]", _connection);
+                SqlCommand selectOrders =
+                    new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, [From], [To], ClientId" +
+                                   " FROM [Order]", _connection);
 
                 using (SqlDataReader reader = selectOrders.ExecuteReader())
                 {
@@ -215,7 +239,7 @@ namespace Logistics.Controllers
 
                         int orderId = Convert.ToInt32(reader["OrderId"]);
                         string cargo = reader["Cargo"].ToString();
-                        int totalWeight =  Convert.ToInt32(reader["TotalWeight"]);
+                        int totalWeight = Convert.ToInt32(reader["TotalWeight"]);
                         float price = (float) Convert.ToDouble(reader["Price"]);
                         string from = reader["From"].ToString();
                         string to = reader["To"].ToString();
@@ -225,8 +249,10 @@ namespace Logistics.Controllers
                     }
                 }
 
-                SqlCommand selectSeaTypeOrders = new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, [From], [To], ClientId,  ShippingLine, IsAdditionalFasteningNeeded" +
-                                   " FROM SeaTypeOrder", _connection);
+                SqlCommand selectSeaTypeOrders =
+                    new SqlCommand(
+                        "SELECT OrderId, Cargo, TotalWeight, Price, [From], [To], ClientId,  ShippingLine, IsAdditionalFasteningNeeded" +
+                        " FROM SeaTypeOrder", _connection);
 
                 using (SqlDataReader reader = selectSeaTypeOrders.ExecuteReader())
                 {
@@ -236,7 +262,7 @@ namespace Logistics.Controllers
                         int orderId = Convert.ToInt32(reader["OrderId"]);
                         string cargo = reader["Cargo"].ToString();
                         int totalWeight = Convert.ToInt32(reader["TotalWeight"]);
-                        float price = (float)Convert.ToDouble(reader["Price"]);
+                        float price = (float) Convert.ToDouble(reader["Price"]);
                         string from = reader["From"].ToString();
                         string to = reader["To"].ToString();
                         string shippingLine = reader["ShippingLine"].ToString();
@@ -244,12 +270,14 @@ namespace Logistics.Controllers
                         int clientId = Convert.ToInt32(reader["ClientId"]);
 
                         orders.Add(new SeaTypeOrder(orderId, cargo, totalWeight, price, from, to,
-                                                    clientId, shippingLine, isAdditionalFasteningNeeded));
+                            clientId, shippingLine, isAdditionalFasteningNeeded));
                     }
                 }
 
-                SqlCommand selectLandTypeOrders = new SqlCommand("SELECT OrderId, Cargo, TotalWeight, Price, [From], [To], ClientId,  TransportLine, IsOpenStorage" +
-                   " FROM LandTypeOrder", _connection);
+                SqlCommand selectLandTypeOrders =
+                    new SqlCommand(
+                        "SELECT OrderId, Cargo, TotalWeight, Price, [From], [To], ClientId,  TransportLine, IsOpenStorage" +
+                        " FROM LandTypeOrder", _connection);
 
                 using (SqlDataReader reader = selectLandTypeOrders.ExecuteReader())
                 {
@@ -259,48 +287,53 @@ namespace Logistics.Controllers
                         int orderId = Convert.ToInt32(reader["OrderId"]);
                         string cargo = reader["Cargo"].ToString();
                         int totalWeight = Convert.ToInt32(reader["TotalWeight"]);
-                        float price = (float)Convert.ToDouble(reader["Price"]);
+                        float price = (float) Convert.ToDouble(reader["Price"]);
                         string from = reader["From"].ToString();
                         string to = reader["To"].ToString();
                         string transportLine = reader["TransportLine"].ToString();
-                        bool isOpenStorage = (bool)reader["IsOpenStorage"];
+                        bool isOpenStorage = (bool) reader["IsOpenStorage"];
                         int clientId = Convert.ToInt32(reader["ClientId"]);
 
                         orders.Add(new LandTypeOrder(orderId, cargo, totalWeight, price, from, to,
-                                                    clientId, transportLine, isOpenStorage));
+                            clientId, transportLine, isOpenStorage));
                     }
-                }  
+                }
 
-                _connection.Close();
             }
             catch (SqlException e)
             {
                 MessageBox.Show("There was database error. Message: " + e.Message);
             }
+            finally
+            {
+                _connection.Close();
+            }
 
             return orders;
         }
 
-        public void Delete(Client client)
+        public void Delete(int clientId)
         {
             try
             {
                 _connection.Open();
 
                 SqlCommand delete = new SqlCommand("DELETE FROM Client WHERE ClientId = " +
-                                                   client.ClientId, _connection);
+                                                   clientId, _connection);
 
                 delete.ExecuteNonQuery();
-
-                _connection.Close();
             }
             catch (SqlException e)
             {
-                MessageBox.Show("There was database error. Message: " + e.Message);
+                MessageBox.Show("Error, which could be caused by trying to delete client, which has some orders");
+            }
+            finally
+            {
+                _connection.Close();
             }
         }
 
-        public void Delete(Order order)
+        public void Delete(int orderId, string orderType)
         {
             try
             {
@@ -308,29 +341,31 @@ namespace Logistics.Controllers
 
                 SqlCommand delete;
 
-                if (order is SeaTypeOrder)
+                if (orderType == "SeaType")
                 {
                     delete = new SqlCommand("DELETE FROM SeaTypeOrder WHERE OrderId = " +
-                                                   order.OrderId, _connection);
+                                                   orderId, _connection);
                 }
-                else if (order is LandTypeOrder)
+                else if (orderType == "LandType")
                 {
                     delete = new SqlCommand("DELETE FROM LandTypeOrder WHERE OrderId = " +
-                                                    order.OrderId, _connection);
+                                                    orderId, _connection);
                 }
                 else
                 {
                     delete = new SqlCommand("DELETE FROM [Order] WHERE OrderId = " +
-                                                    order.OrderId, _connection);
+                                                    orderId, _connection);
                 }
 
                 delete.ExecuteNonQuery();
-
-                _connection.Close();
             }
             catch (SqlException e)
             {
                 MessageBox.Show("There was database error. Message: " + e.Message);
+            }
+            finally
+            {
+                _connection.Close();
             }
         }
 

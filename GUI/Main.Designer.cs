@@ -48,7 +48,7 @@
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(954, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1124, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -81,14 +81,14 @@
             // addNewClientToolStripMenuItem
             // 
             this.addNewClientToolStripMenuItem.Name = "addNewClientToolStripMenuItem";
-            this.addNewClientToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addNewClientToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.addNewClientToolStripMenuItem.Text = "Add client";
             this.addNewClientToolStripMenuItem.Click += new System.EventHandler(this.addNewClientToolStripMenuItem_Click);
             // 
             // addOrderToolStripMenuItem
             // 
             this.addOrderToolStripMenuItem.Name = "addOrderToolStripMenuItem";
-            this.addOrderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addOrderToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.addOrderToolStripMenuItem.Text = "Add order";
             this.addOrderToolStripMenuItem.Click += new System.EventHandler(this.addOrderToolStripMenuItem_Click);
             // 
@@ -101,16 +101,19 @@
             // 
             this.ItemsList.Location = new System.Drawing.Point(0, 27);
             this.ItemsList.Name = "ItemsList";
-            this.ItemsList.Size = new System.Drawing.Size(954, 427);
+            this.ItemsList.Size = new System.Drawing.Size(1124, 427);
             this.ItemsList.TabIndex = 1;
             this.ItemsList.UseCompatibleStateImageBehavior = false;
             this.ItemsList.SelectedIndexChanged += new System.EventHandler(this.ItemsList_SelectedIndexChanged);
+            this.ItemsList.Click += new System.EventHandler(this.ItemsList_Click);
+            this.ItemsList.Leave += new System.EventHandler(this.ItemsList_Leave);
+            this.ItemsList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ItemsList_MouseClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(954, 455);
+            this.ClientSize = new System.Drawing.Size(1124, 455);
             this.Controls.Add(this.ItemsList);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;

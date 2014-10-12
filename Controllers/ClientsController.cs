@@ -27,9 +27,9 @@ namespace Logistics.Controllers
             dbController.Insert(name, level);
         }
 
-        public void Delete(Client client)
+        public void Delete(int clientId)
         {
-            dbController.Delete(client);
+            dbController.Delete(clientId);
         }
 
         public Client GetById(int clientId)
