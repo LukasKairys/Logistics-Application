@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Logistics.Controllers;
 using Logistics.DataTypes;
+using Logistics.Extensions;
 
 namespace Logistics.GUI
 {
@@ -152,16 +153,6 @@ namespace Logistics.GUI
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void NewOrder_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void addOrderButton_Click(object sender, EventArgs e)
         {
             removeAllErrors();
@@ -176,8 +167,6 @@ namespace Logistics.GUI
                 string from = fromTextBox.Text;
                 string to = toTextBox.Text;
 
-
-
                 if (orderType == "Sea Type")
                 {
                     bool isAdditionalFasteningNeeded =
@@ -190,8 +179,10 @@ namespace Logistics.GUI
                     _ordersController.Insert(seaTypeOrder);
 
                 }
+
                 else if (orderType == "Land Type")
                 {
+
                     bool isOpenStorage = Controls[Controls.IndexOfKey("openStorageComboBox")].Text == "Yes";
                     string transportLine = Controls[Controls.IndexOfKey("transportLineComboBox")].Text;
 
@@ -236,12 +227,12 @@ namespace Logistics.GUI
                 CargoTextBox.BackColor = Color.Red;
                 errorCount++;
             }
-            if (TotalWeightTextBox.Text.Length < 1)
+            if (TotalWeightTextBox.Text.Length < 1 || !TotalWeightTextBox.Text.IsNumber())
             {
                 TotalWeightTextBox.BackColor = Color.Red;
                 errorCount++;
             }
-            if (priceTextBox.Text.Length < 1)
+            if (priceTextBox.Text.Length < 1 || !TotalWeightTextBox.Text.IsNumber())
             {
                 priceTextBox.BackColor = Color.Red;
                 errorCount++;

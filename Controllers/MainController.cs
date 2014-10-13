@@ -66,13 +66,10 @@ namespace Logistics.Controllers
 
         public Dictionary<string, float> GetClientWithTotalPriceInLTL()
         {
-            var clients = _clientsController.GetAll();
-            var orders = _ordersController.GetAll();
 
             Dictionary<string, float> clientsWithOrdersPrice = GetClientWithTotalPrice();
 
             float rate = getCurrentRate();
-
 
             for(int index = 0; index < clientsWithOrdersPrice.Count; index++)
             {
@@ -107,13 +104,5 @@ namespace Logistics.Controllers
             return rate;
 
         }
-
-        public void Swap<T>(List<T> list, int element1, int element2 )
-        {
-            T temp = list[element1];
-            list[element1] = list[element2];
-            list[element1] = temp;
-        }
-
     }
 }

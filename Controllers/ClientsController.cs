@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Logistics.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Logistics.DataTypes;
 
 namespace Logistics.Controllers
 {
     class ClientsController
     {
-        public delegate void OnGotResult();
+        public delegate void OnSwap<T>(List<T> list, int element1, int element2);
+
         private IDbController dbController;
 
         public ClientsController(IDbController dbController)
@@ -34,15 +33,39 @@ namespace Logistics.Controllers
 
         public List<Client> GetAll()
         {
-            return dbController.GetAllClients();
+            OnSwap<Client> del = Swap;
+
+            List<Client> clients = dbController.GetAllClients();
+
+            del(clients, 0, 1);
+
+            return clients;
         }
 
         public IEnumerable<Client> GetClients(string level)
         {
-            List<Client> clients = dbController.GetAllClients();
+            string[] levels = {"VIP", "Standart", "InDebt"};
 
-            return clients.Where(client => (client.Level == level));
-        } 
+            Lazy<IEnumerable<Client>> data = new Lazy<IEnumerable<Client>>(delegate
+                            {
+                                return dbController.GetAllClients().Where(client => (client.Level == level));
+                            });
+
+            if (levels.Contains(level))
+            {
+                return data.Value;
+            }
+
+            return null;
+
+        }
+
+        private static void Swap<T>(List<T> list, int element1, int element2)
+        {
+            T temp = list[element1];
+            list[element1] = list[element2];
+            list[element2] = temp;
+        }
 
     }
 }

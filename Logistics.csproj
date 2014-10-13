@@ -49,6 +49,7 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DbController.cs" />
+    <Compile Include="Extensions\MyExtensions.cs" />
     <Compile Include="GUI\ClientsByPrice.cs">
       <SubType>Form</SubType>
     </Compile>
