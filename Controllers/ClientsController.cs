@@ -12,11 +12,6 @@ namespace Logistics.Controllers
         public delegate void OnGotResult();
         private IDbController dbController;
 
-        public Lazy<List<Client>> Clients
-        {
-            get { return new Lazy<List<Client>>(() => GetAll()); }
-        }
-
         public ClientsController(IDbController dbController)
         {
             this.dbController = dbController;

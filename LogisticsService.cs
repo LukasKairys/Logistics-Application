@@ -24,5 +24,11 @@ namespace Logistics
         {
             return new OrdersController(_dbController);
         }
+
+        public static MainController GetMainController()
+        {
+            return new MainController(GetClientsController(), GetOrdersController());
+        }
     }
+
 }

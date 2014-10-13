@@ -23,9 +23,9 @@ namespace Logistics
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            if (menuStrip1.Items.Count == 4)
+            if (menuStrip1.Items.Count == 5)
             {
-                menuStrip1.Items.Remove(menuStrip1.Items[3]);
+                menuStrip1.Items.Remove(menuStrip1.Items[4]);
             }
         }
 
@@ -147,9 +147,9 @@ namespace Logistics
         {
             MenuStrip menuStrip1 = (MenuStrip) Controls["menuStrip1"];
 
-            if (menuStrip1.Items.Count == 4)
+            if (menuStrip1.Items.Count == 5)
             {
-                menuStrip1.Items.Remove(menuStrip1.Items[3]);
+                menuStrip1.Items.Remove(menuStrip1.Items[4]);
             }
 
             ToolStripMenuItem delete = new ToolStripMenuItem("Delete");
@@ -169,23 +169,36 @@ namespace Logistics
             string fullId = ItemsList.SelectedItems[0].Text;
             string[] splited = fullId.Split('-');
 
-            if (splited[0] == "Standart")
-            {
-                new DeleteForm(Convert.ToInt32(splited[1]),"Standart").Show();
-            }
-            else if (splited[0] == "SeaType")
-            {
-                new DeleteForm(Convert.ToInt32(splited[1]), "SeaType").Show();
-            }
-            else if (splited[0] == "LandType")
-            {
-                new DeleteForm(Convert.ToInt32(splited[1]), "LandType").Show();
-            }
-            else
+            if (splited.Length == 1)
             {
                 new DeleteForm(Convert.ToInt32(splited[0]), "Client").Show();
             }
-            
+            else
+            {
+                try
+                {
+                    Int32 id = Convert.ToInt32(splited[1]);
+                    new DeleteForm(Convert.ToInt32(splited[1]), splited[0]).Show();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("System error, cannot parse this Id");
+                }
+            }
+        }
+
+        private void statsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void clientsByOrderCountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Stats().Show();
+        }
+
+        private void clientsByTotalPriceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ClientsByPrice().Show();
         }
     }
 }
