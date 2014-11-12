@@ -22,10 +22,6 @@ namespace Logistics.GUI
             _idOf = idOf;
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-        }
-
         private void NoButton_Click(object sender, EventArgs e)
         {
             Close();
@@ -39,18 +35,7 @@ namespace Logistics.GUI
             }
             else
             {
-                if (_idOf == "SeaType")
-                {
-                    _ordersController.Delete(_ItemIdToDelete, "SeaType");
-                }
-                if (_idOf == "LandType")
-                {
-                    _ordersController.Delete(_ItemIdToDelete, "LandType");
-                }
-                if (_idOf == "Standart")
-                {
-                    _ordersController.Delete(_ItemIdToDelete, "Standart");
-                }
+                _ordersController.Delete(_ItemIdToDelete, _idOf);
             }
             Close();
         }

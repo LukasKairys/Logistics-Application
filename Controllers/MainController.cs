@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Logistics.DataTypes;
 using System.Net;
 using System.IO;
@@ -16,7 +17,6 @@ namespace Logistics.Controllers
         private readonly ClientsController _clientsController;
         private readonly OrdersController _ordersController;
 
-
         public MainController(ClientsController clientsController, OrdersController ordersController)
         {
             _clientsController = clientsController;
@@ -25,6 +25,8 @@ namespace Logistics.Controllers
 
         public Dictionary<string, int> GetClientWithOrders()
         {
+
+
             var clients = _clientsController.GetAll();
             var orders = _ordersController.GetAll();
 
@@ -46,7 +48,9 @@ namespace Logistics.Controllers
 
         public Dictionary<string, float> GetClientWithTotalPrice()
         {
-            var clients = _clientsController.GetAll();
+            ClientsController.OnSwap<Client> del = Swap;
+
+            var clients = _clientsController.GetAll(del);
             var orders = _ordersController.GetAll();
 
             Dictionary<string, float> clientsWithOrdersPrice = new Dictionary<string, float>();
@@ -82,27 +86,43 @@ namespace Logistics.Controllers
         public float getCurrentRate()
         {
             string sURL;
+            float rate = 0;
+
             sURL = "http://www.google.com/finance/converter?a=1&from=EUR&to=LTL";
  
             WebRequest request = WebRequest.Create(sURL);
             request.Credentials = CredentialCache.DefaultCredentials;
-            WebResponse response = request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
-            string responseFromServer = reader.ReadToEnd();
+            try
+            {
+                WebResponse response = request.GetResponse();
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                string responseFromServer = reader.ReadToEnd();
 
-            string pattern = @"<div id=currency_converter_result>1 EUR = <span class=bld>(.*) LTL</span>";
+                string pattern = @"<div id=currency_converter_result>1 EUR = <span class=bld>(.*) LTL</span>";
 
-            Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
-            Match m = r.Match(responseFromServer);
+                Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+                Match m = r.Match(responseFromServer);
 
-            float rate = float.Parse(m.Groups[1].ToString());
-
-            reader.Close();
-            response.Close();
+                rate = float.Parse(m.Groups[1].ToString());
+                reader.Close();
+                response.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Internet error");
+            }
+          
 
             return rate;
 
+        }
+
+        private static void Swap<T>(List<T> list, int element1, int element2)
+        {
+            T temp = list[element1];
+            list[element1] = list[element2];
+            list[element2] = temp;
         }
     }
 }

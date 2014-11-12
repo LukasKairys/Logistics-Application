@@ -119,16 +119,6 @@ namespace Logistics
            
         }
 
-        private void ItemsList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void addNewClientToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new NewClient().Show();
@@ -137,10 +127,6 @@ namespace Logistics
         private void addOrderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new NewOrder().Show();
-        }
-
-        private void ItemsList_Click(object sender, EventArgs e)
-        {
         }
 
         private void ItemsList_MouseClick(object sender, MouseEventArgs e)
@@ -153,15 +139,10 @@ namespace Logistics
             }
 
             ToolStripMenuItem delete = new ToolStripMenuItem("Delete");
+
             delete.Click += deleteToolStripMenuItem_Click;
 
             menuStrip1.Items.Add(delete);
-
-
-        }
-
-        private void ItemsList_Leave(object sender, EventArgs e)
-        {
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -185,10 +166,6 @@ namespace Logistics
                     MessageBox.Show("System error, cannot parse this Id");
                 }
             }
-        }
-
-        private void statsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
         }
 
         private void clientsByOrderCountToolStripMenuItem_Click(object sender, EventArgs e)

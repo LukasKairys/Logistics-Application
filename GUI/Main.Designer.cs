@@ -104,7 +104,6 @@
             this.statsToolStripMenuItem.Name = "statsToolStripMenuItem";
             this.statsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.statsToolStripMenuItem.Text = "Stats";
-            this.statsToolStripMenuItem.Click += new System.EventHandler(this.statsToolStripMenuItem_Click);
             // 
             // fileSystemWatcher1
             // 
@@ -120,9 +119,6 @@
             this.ItemsList.Size = new System.Drawing.Size(1124, 427);
             this.ItemsList.TabIndex = 1;
             this.ItemsList.UseCompatibleStateImageBehavior = false;
-            this.ItemsList.SelectedIndexChanged += new System.EventHandler(this.ItemsList_SelectedIndexChanged);
-            this.ItemsList.Click += new System.EventHandler(this.ItemsList_Click);
-            this.ItemsList.Leave += new System.EventHandler(this.ItemsList_Leave);
             this.ItemsList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ItemsList_MouseClick);
             // 
             // clientsByOrderCountToolStripMenuItem
@@ -149,7 +145,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();

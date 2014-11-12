@@ -31,9 +31,8 @@ namespace Logistics.Controllers
             return dbController.GetClientById(clientId);
         }
 
-        public List<Client> GetAll()
+        public List<Client> GetAll(OnSwap<Client> del)
         {
-            OnSwap<Client> del = Swap;
 
             List<Client> clients = dbController.GetAllClients();
 
@@ -42,13 +41,23 @@ namespace Logistics.Controllers
             return clients;
         }
 
+        public List<Client> GetAll()
+        {
+            List<Client> clients = dbController.GetAllClients();
+
+            return clients;
+        }
+
         public IEnumerable<Client> GetClients(string level)
         {
             string[] levels = {"VIP", "Standart", "InDebt"};
 
+            Func<Client, bool> p = client => client.Level == level;
+            
+
             Lazy<IEnumerable<Client>> data = new Lazy<IEnumerable<Client>>(delegate
                             {
-                                return dbController.GetAllClients().Where(client => (client.Level == level));
+                                return dbController.GetAllClients().Where(p);
                             });
 
             if (levels.Contains(level))
@@ -58,13 +67,6 @@ namespace Logistics.Controllers
 
             return null;
 
-        }
-
-        private static void Swap<T>(List<T> list, int element1, int element2)
-        {
-            T temp = list[element1];
-            list[element1] = list[element2];
-            list[element2] = temp;
         }
 
     }

@@ -41,7 +41,6 @@
             this.label1.Size = new System.Drawing.Size(205, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Are you sure, you want delete this record?";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // yesButton
             // 

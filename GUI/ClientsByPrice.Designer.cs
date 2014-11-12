@@ -82,7 +82,6 @@
             this.label1.Size = new System.Drawing.Size(126, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Current EUR To LTL rate";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // rateLabel
             // 
@@ -91,7 +90,6 @@
             this.rateLabel.Name = "rateLabel";
             this.rateLabel.Size = new System.Drawing.Size(0, 13);
             this.rateLabel.TabIndex = 4;
-            this.rateLabel.Click += new System.EventHandler(this.label3_Click);
             // 
             // ClientsByPrice
             // 

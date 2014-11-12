@@ -82,7 +82,7 @@ namespace Logistics.Controllers
             {
                 _connection.Open();
 
-                SqlCommand insert = new SqlCommand("INSERT INTO Order(Cargo, TotalWeight, Price, [From], [To],TransportLine, IsOpenStorage, ClientId) " +
+                SqlCommand insert = new SqlCommand("INSERT INTO LandTypeOrder(Cargo, TotalWeight, Price, [From], [To],TransportLine, IsOpenStorage, ClientId) " +
                                                    "VALUES (@Cargo, @TotalWeight, @Price, @From, @To, @TransportLine, @IsOpenStorage, @ClientId)", _connection);
 
                 insert.Parameters.AddWithValue("@Cargo", order.Cargo);
